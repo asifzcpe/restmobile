@@ -10,6 +10,10 @@ $.ajax({
   beforeSend: function(xhr) {
     xhr.setRequestHeader("auth-key", "145885521jhs"); 
     // more as you need
+  },
+  success:function(data, textStatus, jqXHR){
+  	console.log(jqXHR);
+
   }
 });
  </script>

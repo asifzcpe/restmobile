@@ -57,6 +57,33 @@ class DBAdapter
 			echo $e->getMessage();
 		}
 	}
+
+	public function delete($table,$fields_with_values,$logical_operator='AND')
+	{
+		$logic_operator_index=1;
+		$this->sql="DELETE FROM $table WHERE ";
+		foreach($fields_with_values as $k=>$v)
+		{
+			$this->sql.=$k."=".'?';
+			if($logic_operator_index<count($fields_with_values))
+			{
+				$this->sql.=' '.$logical_operator.' ';
+			}
+
+			$logic_operator_index++;
+		}
+
+		try{
+			$stmt=$this->con->prepare($this->sql);
+			$stmt->execute(array_values($fields_with_values));
+
+		}
+		catch(\PDOException $e){
+			echo $e->getMessage();
+		}
+	}
+
+
 	public function __destruct()
 	{
 		$this->con=null;
